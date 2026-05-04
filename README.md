@@ -4,46 +4,49 @@ Governed AI Infinity Framework · IP: Andre Thompson Sr. / AI Infinity Group LLC
 
 ---
 
-## Project structure
+## Local development
 
-```
-infinitydragon-site/
-├── index.html                      entry HTML
-├── package.json                    dependencies + build scripts
-├── vite.config.js                  build config
-├── .gitignore
-└── src/
-    ├── main.jsx                    React mount point
-    └── InfinityDragonSite.jsx      full site component (5 sections)
-```
+Requires Node 18+ installed.
 
-## Local development (optional)
-
-Requires Node 18+.
-
-```
+```bash
 npm install
 npm run dev      # http://localhost:5173
 npm run build    # produces ./dist
 ```
 
-## Deploy to Vercel
+## Deployment (Vercel)
+
+This repo is set up for one-click Vercel deployment.
 
 1. Push this folder to a GitHub repo
-2. Go to vercel.com → New Project → Import the repo
+2. Go to https://vercel.com → New Project → Import the repo
 3. Framework preset: **Vite** (auto-detected)
 4. Click Deploy
-5. Add custom domain: Settings → Domains → infinitydragon.ai
-6. Update DNS at GoDaddy as Vercel instructs
+5. Add custom domain: Settings → Domains → `infinitydragon.ai` and `www.infinitydragon.ai`
+6. Update DNS at GoDaddy as instructed by Vercel (typical records below)
 
 ### GoDaddy DNS records
+
+Replace the parked-page records with:
 
 | Type  | Name | Value                  | TTL  |
 |-------|------|------------------------|------|
 | A     | @    | 76.76.21.21            | 600  |
 | CNAME | www  | cname.vercel-dns.com   | 600  |
 
-(Always trust Vercel's dashboard values over these defaults.)
+(Vercel will display the exact values to use — always trust their dashboard over these defaults.)
+
+## Project structure
+
+```
+infinitydragon-site/
+├── index.html                      # entry HTML, loads React + Tailwind
+├── package.json                    # dependencies + build scripts
+├── vite.config.js                  # build config
+└── src/
+    ├── main.jsx                    # React mount point
+    └── InfinityDragonSite.jsx      # the full site component
+```
 
 ## Updating the site
 
