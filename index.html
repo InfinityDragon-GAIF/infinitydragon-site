@@ -325,6 +325,7 @@ footer{background:var(--obsidian);border-top:1px solid var(--border);padding:2re
   nav{padding:1rem 1.5rem;}
   .nav-links{display:none;}
   #countdown-bar{padding:0.8rem 1.5rem;gap:1rem;}
+  #books-grid{grid-template-columns:repeat(2,1fr)!important;}
   .section-inner{padding:4rem 1.5rem;}
   .stats-row{grid-template-columns:repeat(2,1fr);padding:0 1.5rem;}
   .stat-item{border-right:none;border-bottom:1px solid var(--border);}
@@ -377,6 +378,7 @@ footer{background:var(--obsidian);border-top:1px solid var(--border);padding:2re
         More <span class="arr" aria-hidden="true">▾</span>
       </button>
       <div class="nav-dropdown-menu" role="menu">
+        <a href="#books" role="menuitem">Books &amp; eBooks</a>
         <a href="#listen" role="menuitem">Hear the Framework</a>
         <a href="#token-threat" role="menuitem">Token Threat Surface™</a>
         <a href="#thesis" role="menuitem">Governing Thesis</a>
@@ -722,6 +724,87 @@ footer{background:var(--obsidian);border-top:1px solid var(--border);padding:2re
           <div style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">250 working days · April 6, 2026 → April 5, 2027<br>Pipeline: Albany Municipal → HBCU → State → Federal</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKS -->
+<section id="books" style="background:var(--deep-navy);">
+  <div class="section-inner">
+    <p class="section-label reveal">Published Works</p>
+    <h2 class="section-title reveal">Books &amp; <strong>eBooks</strong></h2>
+    <p class="section-desc reveal">Available now on Amazon. Click any cover to view on Amazon.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem;" class="reveal" id="books-grid">
+
+      <!-- Book 1 — B0GHT5NDWM: AI→AIF→GI -->
+      <a href="https://www.amazon.com/dp/B0GHT5NDWM"
+         target="_blank" rel="noopener noreferrer"
+         style="display:flex;flex-direction:column;text-decoration:none;"
+         aria-label="View AI→AIF→GI on Amazon">
+        <div style="overflow:hidden;border:1px solid var(--border);background:var(--panel);transition:border-color 0.3s;"
+             onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.18)'">
+          <img src="book1.png"
+               alt="AI → AIF → GI: How Governance Transforms Artificial Intelligence into Trusted, Accountable Intelligence — Andre Thompson Sr."
+               style="width:100%;display:block;aspect-ratio:2/3;object-fit:cover;">
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--border);border-top:none;padding:0.7rem 0.9rem;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text-muted);letter-spacing:0.1em;">View on Amazon</span>
+          <span style="color:var(--gold);font-size:0.7rem;">→</span>
+        </div>
+      </a>
+
+      <!-- Book 2 — B0G2Z31Z9N: AI Infinity Framework™ -->
+      <a href="https://www.amazon.com/dp/B0G2Z31Z9N"
+         target="_blank" rel="noopener noreferrer"
+         style="display:flex;flex-direction:column;text-decoration:none;"
+         aria-label="View AI Infinity Framework™ on Amazon">
+        <div style="overflow:hidden;border:1px solid var(--border);background:var(--panel);transition:border-color 0.3s;"
+             onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.18)'">
+          <img src="book2.png"
+               alt="AI Infinity Framework™: How We Keep Humanity Safe in the Age of Unregulated AI — Andre Thompson Sr."
+               style="width:100%;display:block;aspect-ratio:2/3;object-fit:cover;">
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--border);border-top:none;padding:0.7rem 0.9rem;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text-muted);letter-spacing:0.1em;">View on Amazon</span>
+          <span style="color:var(--gold);font-size:0.7rem;">→</span>
+        </div>
+      </a>
+
+      <!-- Book 3 — B0GYBHCMX5: Governing the Token Threat Surface -->
+      <a href="https://www.amazon.com/dp/B0GYBHCMX5"
+         target="_blank" rel="noopener noreferrer"
+         style="display:flex;flex-direction:column;text-decoration:none;"
+         aria-label="View Governing the Token Threat Surface on Amazon">
+        <div style="overflow:hidden;border:1px solid var(--border);background:var(--panel);transition:border-color 0.3s;"
+             onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.18)'">
+          <img src="book3.png"
+               alt="Governing the Token Threat Surface: How GAIF Closes the Last Ungoverned Gap in the AI/Cybersecurity Ecosystem — Andre Thompson Sr."
+               style="width:100%;display:block;aspect-ratio:2/3;object-fit:cover;">
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--border);border-top:none;padding:0.7rem 0.9rem;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text-muted);letter-spacing:0.1em;">View on Amazon</span>
+          <span style="color:var(--gold);font-size:0.7rem;">→</span>
+        </div>
+      </a>
+
+      <!-- Book 4 — B0FHFL9HNT: Prompt Engineering Using the AI Infinity Framework -->
+      <a href="https://www.amazon.com/dp/B0FHFL9HNT"
+         target="_blank" rel="noopener noreferrer"
+         style="display:flex;flex-direction:column;text-decoration:none;"
+         aria-label="View Prompt Engineering Using the AI Infinity Framework on Amazon">
+        <div style="overflow:hidden;border:1px solid var(--border);background:var(--panel);transition:border-color 0.3s;"
+             onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.18)'">
+          <img src="book4.png"
+               alt="Prompt Engineering Using the AI Infinity Framework — Andre Thompson Sr. a.k.a. AI Dragonfly"
+               style="width:100%;display:block;aspect-ratio:2/3;object-fit:cover;">
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--border);border-top:none;padding:0.7rem 0.9rem;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text-muted);letter-spacing:0.1em;">View on Amazon</span>
+          <span style="color:var(--gold);font-size:0.7rem;">→</span>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
