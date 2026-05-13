@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>GAIF Ecosystem | infinitydragon.ai</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cy:#00e5ff;--cy5:rgba(0,229,255,.5);--cy1:rgba(0,229,255,.07);
+  --gold:#ffd04a;--grn:#00ff9d;--red:#ff2055;--amb:#ffb830;--pur:#b44fff;
+  --bg:#020c16;--bdr:rgba(0,229,255,.1);--txt:#d4eef8;--mut:rgba(212,238,248,.35);
+  --fd:'Orbitron',sans-serif;--fm:'IBM Plex Mono',monospace
+}
+html,body{background:var(--bg);color:var(--txt);font-family:var(--fm);
+  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── GRID BACKGROUND ── */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(0,229,255,.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,255,.015) 1px,transparent 1px);
+  background-size:48px 48px}
+
+/* ── SCAN LINE ── */
+body::after{content:'';position:fixed;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(0,229,255,.4),transparent);
+  z-index:200;animation:scan 6s linear infinite;pointer-events:none}
+@keyframes scan{0%{top:-2px}100%{top:100vh}}
+
+#app{position:relative;z-index:1}
+
+/* ── HEADER ── */
+.hdr{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--bdr);background:rgba(2,12,22,.95);
+  backdrop-filter:blur(20px);position:sticky;top:0;z-index:100}
+.hdr-l{display:flex;align-items:center;gap:16px}
+.logo{font-family:var(--fd);font-weight:900;font-size:36px;color:var(--cy);
+  text-shadow:0 0 40px rgba(0,229,255,.6),0 0 80px rgba(0,229,255,.2);
+  animation:logoPulse 4s ease-in-out infinite;cursor:default;line-height:1}
+@keyframes logoPulse{0%,100%{text-shadow:0 0 40px rgba(0,229,255,.6),0 0 80px rgba(0,229,255,.2)}
+  50%{text-shadow:0 0 60px rgba(0,229,255,.9),0 0 120px rgba(0,229,255,.4)}}
+.hdr-titles{display:flex;flex-direction:column;gap:3px}
+.hdr-title{font-family:var(--fd);font-weight:700;font-size:13px;letter-spacing:5px;color:var(--cy)}
+.hdr-sub{font-size:8px;letter-spacing:3px;color:var(--cy5)}
+.hdr-r{text-align:right}
+.hdr-org{font-size:8px;letter-spacing:3px;color:var(--mut)}
+.hdr-url{font-size:8px;letter-spacing:2px;color:rgba(0,229,255,.3);margin-top:3px}
+.status-pill{display:flex;align-items:center;gap:6px;margin-top:6px;
+  border:1px solid rgba(0,255,157,.2);padding:3px 10px;background:rgba(0,255,157,.05)}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--grn);
+  animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.status-txt{font-size:7px;letter-spacing:3px;color:rgba(0,255,157,.6);text-transform:uppercase}
+
+/* ── HERO ── */
+.hero{padding:48px 40px 32px;text-align:center;position:relative}
+.hero-eyebrow{font-size:8px;letter-spacing:6px;color:var(--cy5);margin-bottom:16px;text-transform:uppercase}
+.hero-h1{font-family:var(--fd);font-weight:900;font-size:clamp(22px,4vw,42px);
+  letter-spacing:4px;color:var(--txt);line-height:1.2;margin-bottom:12px}
+.hero-h1 span{color:var(--cy)}
+.hero-thesis{font-size:11px;color:var(--mut);line-height:1.9;max-width:720px;
+  margin:0 auto 32px;letter-spacing:.3px}
+.hero-thesis strong{color:rgba(212,238,248,.7);font-weight:400}
+.formula-strip{display:inline-flex;align-items:center;gap:0;border:1px solid var(--bdr);
+  background:rgba(0,229,255,.04);padding:12px 24px;font-size:11px;
+  color:rgba(0,229,255,.5);letter-spacing:1px;flex-wrap:wrap;justify-content:center;gap:8px}
+.formula-strip .part{padding:0 4px}
+.formula-strip .eq{color:var(--gold);font-weight:500}
+
+/* ── SECTION WRAPPERS ── */
+.section{padding:40px 40px}
+.section-hdr{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.section-num{font-family:var(--fd);font-size:10px;letter-spacing:3px;
+  color:rgba(0,229,255,.2);min-width:28px}
+.section-title{font-family:var(--fd);font-size:10px;letter-spacing:5px;
+  color:var(--cy);text-transform:uppercase}
+.section-line{flex:1;height:1px;background:var(--bdr)}
+
+/* ── TOKEN THREAT PIPELINE ── */
+.pipeline-wrap{position:relative;overflow:hidden}
+.pipeline{display:flex;align-items:center;gap:0;position:relative;
+  padding:20px 0;overflow-x:auto}
+.pipe-stage{display:flex;flex-direction:column;align-items:center;position:relative;flex-shrink:0}
+.pipe-box{width:100px;padding:10px 8px;border:1px solid;text-align:center;
+  position:relative;transition:all .3s;cursor:default;background:rgba(2,12,22,.8)}
+.pipe-box-id{font-family:var(--fd);font-size:8px;letter-spacing:2px;margin-bottom:4px}
+.pipe-box-name{font-size:8px;letter-spacing:1px;line-height:1.4}
+.pipe-box-score{font-family:var(--fd);font-size:14px;font-weight:900;margin-top:6px}
+.pipe-arrow{width:32px;height:2px;flex-shrink:0;position:relative;align-self:center;margin-top:-20px}
+.pipe-arrow::after{content:'▶';position:absolute;right:-6px;top:-7px;
+  font-size:10px;color:inherit}
+.pipe-label{font-size:7px;letter-spacing:2px;color:var(--mut);margin-top:7px;text-align:center;
+  max-width:100px;line-height:1.4}
+
+/* Layer colors */
+.who{border-color:rgba(0,229,255,.35);color:var(--cy)}
+.what{border-color:rgba(255,208,74,.35);color:var(--gold)}
+.which{border-color:rgba(0,255,157,.35);color:var(--grn)}
+.why{border-color:rgba(255,32,85,.45);color:var(--red)}
+.when{border-color:rgba(180,79,255,.35);color:var(--pur)}
+.where{border-color:rgba(0,229,255,.25);color:rgba(0,229,255,.7)}
+.how{border-color:rgba(255,208,74,.25);color:rgba(255,208,74,.7)}
+.if{border-color:rgba(255,32,85,.3);color:rgba(255,32,85,.7)}
+.impact{border-color:rgba(0,255,157,.25);color:rgba(0,255,157,.7)}
+
+/* ── TOKEN FLOW ANIMATION ── */
+.token-flow{position:relative;height:4px;background:rgba(0,229,255,.05);
+  margin:20px 0;overflow:hidden;border:1px solid var(--bdr)}
+.token-particle{position:absolute;top:0;height:100%;width:60px;
+  background:linear-gradient(90deg,transparent,var(--cy),transparent);
+  animation:tokenFlow 3s linear infinite;opacity:.7}
+.token-particle:nth-child(2){animation-delay:1s;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.token-particle:nth-child(3){animation-delay:2s;background:linear-gradient(90deg,transparent,var(--grn),transparent)}
+@keyframes tokenFlow{0%{left:-60px}100%{left:100%}}
+
+/* ── ACA GATE GRID ── */
+.gate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.gate-phase{border:1px solid var(--bdr);background:rgba(0,229,255,.02);padding:16px}
+.gate-phase-title{font-family:var(--fd);font-size:7px;letter-spacing:4px;
+  color:rgba(0,229,255,.3);margin-bottom:14px;text-transform:uppercase;
+  padding-bottom:8px;border-bottom:1px solid var(--bdr)}
+.gate-item{display:flex;align-items:center;gap:8px;margin-bottom:9px;
+  padding:6px 8px;border:1px solid transparent;transition:all .4s;cursor:default}
+.gate-item.executing{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.06)}
+.gate-item.passed{border-color:rgba(0,255,157,.2);background:rgba(0,255,157,.04)}
+.gate-item.computed{border-color:rgba(255,208,74,.2);background:rgba(255,208,74,.04)}
+.gate-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:all .4s}
+.gate-item.executing .gate-dot{background:var(--cy);box-shadow:0 0 8px var(--cy)}
+.gate-item.passed .gate-dot{background:var(--grn)}
+.gate-item.computed .gate-dot{background:var(--gold)}
+.gate-item.idle .gate-dot{background:rgba(0,229,255,.15)}
+.gate-id{font-family:var(--fd);font-size:8px;letter-spacing:1px;min-width:28px;
+  transition:color .4s}
+.gate-item.executing .gate-id{color:var(--cy)}
+.gate-item.passed .gate-id{color:var(--grn)}
+.gate-item.computed .gate-id{color:var(--gold)}
+.gate-item.idle .gate-id{color:rgba(0,229,255,.2)}
+.gate-desc{font-size:8px;color:var(--mut);line-height:1.3;letter-spacing:.3px;transition:color .4s}
+.gate-item.executing .gate-desc{color:rgba(212,238,248,.6)}
+.gate-score{font-family:var(--fd);font-size:9px;margin-left:auto;flex-shrink:0;transition:all .4s}
+.gate-item.executing .gate-score{color:var(--cy)}
+.gate-item.passed .gate-score{color:var(--grn)}
+
+/* ── CONVERGENCE PANEL ── */
+.conv-wrap{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.gamma-ring{position:relative;flex-shrink:0}
+.dim-bars{display:flex;flex-direction:column;gap:10px;flex:1}
+.dim-row{display:flex;align-items:center;gap:10px}
+.dim-lbl{font-size:9px;letter-spacing:2px;color:var(--cy5);width:44px;flex-shrink:0}
+.dim-name{font-size:8px;color:var(--mut);flex:1;letter-spacing:.5px}
+.dim-track{width:100%;max-width:280px;height:4px;background:rgba(0,229,255,.06);position:relative}
+.dim-fill{height:100%;background:var(--cy);transition:width 1.5s ease}
+.dim-val{font-family:var(--fd);font-size:9px;color:var(--cy);min-width:38px;text-align:right}
+.cl-display{border:1px solid rgba(0,229,255,.2);background:rgba(0,229,255,.04);
+  padding:12px 16px;margin-top:16px;display:flex;align-items:center;justify-content:space-between}
+.cl-label{font-size:8px;letter-spacing:3px;color:var(--mut);text-transform:uppercase}
+.cl-val{font-family:var(--fd);font-size:18px;font-weight:900;color:var(--cy)}
+.cl-formula{font-size:8px;color:rgba(0,229,255,.3);letter-spacing:1px}
+
+/* ── E=L ENFORCEMENT DISPLAY ── */
+.el-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.el-card{border:1px solid var(--bdr);padding:18px;position:relative;overflow:hidden;
+  transition:all .5s}
+.el-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--cy);transform:scaleX(0);transform-origin:left;transition:transform .6s ease}
+.el-card.active::before{transform:scaleX(1)}
+.el-card.active{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.04)}
+.el-state{font-family:var(--fd);font-size:8px;letter-spacing:3px;margin-bottom:8px;
+  text-transform:uppercase}
+.el-card.block .el-state{color:var(--red)}
+.el-card.check .el-state{color:var(--cy)}
+.el-card.invalid .el-state{color:var(--amb)}
+.el-eq{font-family:var(--fd);font-size:22px;font-weight:900;margin-bottom:8px}
+.el-card.block .el-eq{color:var(--red)}
+.el-card.check .el-eq{color:var(--cy)}
+.el-card.invalid .el-eq{color:var(--amb)}
+.el-desc{font-size:9px;color:var(--mut);line-height:1.7}
+.el-action{font-size:8px;letter-spacing:2px;margin-top:8px;padding:5px 10px;
+  display:inline-block;text-transform:uppercase}
+.el-card.block .el-action{background:rgba(255,32,85,.1);border:1px solid rgba(255,32,85,.3);color:var(--red)}
+.el-card.check .el-action{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cy)}
+.el-card.invalid .el-action{background:rgba(255,184,48,.08);border:1px solid rgba(255,184,48,.2);color:var(--amb)}
+
+/* ── GOVERNANCE THESIS ── */
+.thesis-box{border:1px solid rgba(0,229,255,.15);background:rgba(0,229,255,.03);
+  padding:28px 32px;position:relative}
+.thesis-box::before{content:'∞✓';position:absolute;top:16px;right:20px;
+  font-size:24px;color:rgba(0,229,255,.1);font-family:var(--fd)}
+.thesis-label{font-size:7px;letter-spacing:5px;color:rgba(0,229,255,.3);
+  margin-bottom:16px;text-transform:uppercase}
+.thesis-text{font-size:13px;color:rgba(212,238,248,.65);line-height:2;
+  letter-spacing:.5px;font-weight:300}
+.thesis-text strong{color:var(--cy);font-weight:400}
+.thesis-gamma{display:flex;align-items:center;gap:12px;margin-top:20px;
+  padding-top:16px;border-top:1px solid var(--bdr)}
+.thesis-gamma-val{font-family:var(--fd);font-weight:900;font-size:20px;color:var(--grn)}
+.thesis-gamma-lbl{font-size:8px;color:var(--mut);letter-spacing:2px;line-height:1.6}
+
+/* ── IP STACK ── */
+.ip-stack{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ip-item{border:1px solid var(--bdr);padding:14px 16px;
+  display:flex;align-items:flex-start;gap:12px;transition:all .3s}
+.ip-item:hover{border-color:rgba(0,229,255,.25);background:rgba(0,229,255,.03)}
+.ip-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.ip-name{font-family:var(--fd);font-size:8px;letter-spacing:2px;color:var(--cy);margin-bottom:4px}
+.ip-desc{font-size:8px;color:var(--mut);line-height:1.6;letter-spacing:.3px}
+
+/* ── FOOTER ── */
+.ftr{border-top:1px solid var(--bdr);padding:20px 40px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(2,12,22,.8)}
+.ftr-l{font-size:8px;color:rgba(212,238,248,.12);letter-spacing:1px;line-height:1.8}
+.ftr-r{font-family:var(--fd);font-size:18px;color:rgba(0,229,255,.2)}
+
+/* ── LIVE COUNTER ── */
+.live-counters{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.counter-card{border:1px solid var(--bdr);padding:16px;text-align:center;
+  background:rgba(0,229,255,.02)}
+.counter-val{font-family:var(--fd);font-weight:900;font-size:28px;
+  color:var(--cy);line-height:1;margin-bottom:6px}
+.counter-lbl{font-size:7px;letter-spacing:3px;color:var(--mut);text-transform:uppercase}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 rgba(0,229,255,0)}50%{box-shadow:0 0 20px rgba(0,229,255,.15)}}
+.fade-up{animation:fadeUp .6s ease forwards;opacity:0}
+.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}
+.delay-4{animation-delay:.4s}.delay-5{animation-delay:.5s}
+
+@media(max-width:900px){
+  .gate-grid{grid-template-columns:repeat(2,1fr)}
+  .el-grid{grid-template-columns:1fr}
+  .conv-wrap{grid-template-columns:1fr}
+  .ip-stack{grid-template-columns:1fr}
+  .live-counters{grid-template-columns:repeat(2,1fr)}
+  .hdr{padding:14px 18px}.section{padding:28px 18px}
+  .hero{padding:32px 18px 24px}
+  .pipeline{gap:0}
+  .pipe-box{width:80px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="logo">∞</div>
+    <div class="hdr-titles">
+      <div class="hdr-title">AI Infinity Framework</div>
+      <div class="hdr-sub">Governed AI Infinity Framework · ACA v109 · GIOS</div>
+    </div>
+  </div>
+  <div class="hdr-r">
+    <div class="hdr-org">AI Infinity Group LLC · Andre Thompson Sr.</div>
+    <a href="https://infinitydragon.ai" style="font-size:8px;letter-spacing:2px;
+      color:rgba(0,229,255,.35);margin-top:3px;display:block;text-decoration:none;
+      transition:color .2s" onmouseover="this.style.color='var(--cy)'"
+      onmouseout="this.style.color='rgba(0,229,255,.35)'">← infinitydragon.ai</a>
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      <span class="status-txt">Framework Active · γ=0.998 ∞✓</span>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero fade-up">
+  <div class="hero-eyebrow">Governed Intelligence Operating System</div>
+  <h1 class="hero-h1">The Framework That Governs<br/><span>From the Token Up</span></h1>
+  <p class="hero-thesis">
+    <strong>Ungoverned AI creates a powerful threat vector for cybercrime because risk begins at the token level.</strong>
+    The Governed AI Infinity Framework establishes constitutional governance architecture —
+    making AI <strong>controllable</strong>, <strong>auditable</strong>, and <strong>defensible</strong>
+    at every layer of execution. This is what governed intelligence looks like operating in real time.
+  </p>
+  <div class="formula-strip">
+    <span class="part">GI</span>
+    <span class="eq">=</span>
+    <span class="part">CL∞(L₉∘…∘L₁(AI(x)))</span>
+    <span class="eq">s.t.</span>
+    <span class="part">E=L</span>
+    <span class="eq">∧</span>
+    <span class="part">γ≥0.995</span>
+    <span class="eq">∧</span>
+    <span class="part">HS≻AI</span>
+    <span class="eq">∧</span>
+    <span class="part">GV=1</span>
+  </div>
+</section>
+
+<!-- LIVE COUNTERS -->
+<section class="section fade-up delay-1">
+  <div class="live-counters">
+    <div class="counter-card">
+      <div class="counter-val" id="cnt-layers">9</div>
+      <div class="counter-lbl">Interrogative Layers</div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-val" id="cnt-gates">27</div>
+      <div class="counter-lbl">ACA Execution Gates</div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-val" id="cnt-elements">143</div>
+      <div class="counter-lbl">Registry Elements</div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-val" id="cnt-gamma" style="color:var(--grn)">0.998</div>
+      <div class="counter-lbl">Plateau-Lock γ ∞✓</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: TOKEN THREAT PIPELINE -->
+<section class="section fade-up delay-2">
+  <div class="section-hdr">
+    <div class="section-num">01</div>
+    <div class="section-title">Nine-Layer Governance Pipeline</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="token-flow">
+    <div class="token-particle"></div>
+    <div class="token-particle"></div>
+    <div class="token-particle"></div>
+  </div>
+
+  <div class="pipeline" id="pipeline">
+    <!-- Injected by JS -->
+  </div>
+
+  <div style="font-size:8px;color:var(--mut);margin-top:12px;letter-spacing:1px;text-align:center">
+    Every token passes through all nine interrogative layers — every pass — no skips. E=L.
+  </div>
+</section>
+
+<!-- SECTION 2: ACA 27-GATE EXECUTION -->
+<section class="section fade-up delay-2">
+  <div class="section-hdr">
+    <div class="section-num">02</div>
+    <div class="section-title">ACA v109 — 27-Gate Execution Architecture</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="gate-grid" id="gate-grid">
+    <!-- Injected by JS -->
+  </div>
+</section>
+
+<!-- SECTION 3: E=L ENFORCEMENT -->
+<section class="section fade-up delay-3">
+  <div class="section-hdr">
+    <div class="section-num">03</div>
+    <div class="section-title">E=L — Execution Equals Layer</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div style="font-size:9px;color:var(--mut);margin-bottom:20px;letter-spacing:.5px;line-height:1.8;max-width:640px">
+    Every layer must execute every pass. E=Execution, L=Layer. Three enforcement states govern every gate transition. No gate may be skipped, bypassed, or approximated.
+  </div>
+
+  <div class="el-grid">
+    <div class="el-card block" id="el-block">
+      <div class="el-state">State I</div>
+      <div class="el-eq">E &lt; L</div>
+      <div class="el-desc">Execution falls short of the required layer threshold. Governance gap detected. Output cannot proceed.</div>
+      <div class="el-action">→ BLOCK</div>
+    </div>
+    <div class="el-card check" id="el-check">
+      <div class="el-state">State II</div>
+      <div class="el-eq">E = L</div>
+      <div class="el-desc">Execution meets layer requirement exactly. CL∞ convergence check initiated. Governance confirmed at this gate.</div>
+      <div class="el-action">→ CL∞ CHECK</div>
+    </div>
+    <div class="el-card invalid" id="el-invalid">
+      <div class="el-state">State III</div>
+      <div class="el-eq">E &gt; L</div>
+      <div class="el-desc">Execution exceeds layer boundary. Drift condition detected. Autonomy overreach triggers INVALID state.</div>
+      <div class="el-action">→ INVALID / DRIFT</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: CL∞ CONVERGENCE -->
+<section class="section fade-up delay-3">
+  <div class="section-hdr">
+    <div class="section-num">04</div>
+    <div class="section-title">CL∞ v109 — Convergence Layer</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="conv-wrap">
+    <div class="gamma-ring">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <circle cx="80" cy="80" r="66" fill="none" stroke="rgba(0,229,255,.06)" stroke-width="8"/>
+        <circle cx="80" cy="80" r="66" fill="none" stroke="var(--grn)" stroke-width="8"
+          stroke-dasharray="414.69 414.69" stroke-dashoffset="0"
+          stroke-linecap="round" transform="rotate(-90,80,80)"
+          id="gamma-arc" style="transition:stroke-dashoffset 2s ease"/>
+        <text x="80" y="72" text-anchor="middle" fill="var(--grn)"
+          font-size="26" font-family="Orbitron,sans-serif" font-weight="900" id="gamma-txt">0.998</text>
+        <text x="80" y="90" text-anchor="middle" fill="rgba(0,229,255,.35)"
+          font-size="8" font-family="IBM Plex Mono,monospace" letter-spacing="2">γ SCORE</text>
+        <text x="80" y="106" text-anchor="middle" fill="rgba(0,255,157,.5)"
+          font-size="8" font-family="IBM Plex Mono,monospace" letter-spacing="1">PLATEAU-LOCK ∞✓</text>
+      </svg>
+    </div>
+    <div>
+      <div class="dim-bars" id="dim-bars"><!-- JS --></div>
+      <div class="cl-display">
+        <div>
+          <div class="cl-label">CL∞ v109</div>
+          <div class="cl-formula">= min(T, E, C, U, S)</div>
+        </div>
+        <div class="cl-val" id="cl-val">0.995</div>
+      </div>
+      <div style="margin-top:12px;font-size:8px;color:var(--mut);line-height:1.8;letter-spacing:.5px">
+        γ = w₁·(T+C)/2 + w₂·(E+U)/2 + w₃·S &nbsp;|&nbsp; w₁=0.35 · w₂=0.40 · w₃=0.25
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: GOVERNING THESIS -->
+<section class="section fade-up delay-4">
+  <div class="section-hdr">
+    <div class="section-num">05</div>
+    <div class="section-title">Governing Thesis — Plateau-Locked</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="thesis-box">
+    <div class="thesis-label">Governing Thesis · γ=0.998 ∞✓</div>
+    <div class="thesis-text">
+      <strong>AI security is difficult to achieve when AI is ungoverned.</strong>
+      Governed AI is more <strong>controllable</strong>, more <strong>auditable</strong>, and more <strong>defensible</strong>.
+      Ungoverned AI creates a powerful threat vector for cybercrime because
+      <strong>risk begins at the token level</strong>.
+      Effective AI governance reduces that risk, making AI security
+      increasingly achievable from the token up.
+    </div>
+    <div class="thesis-gamma">
+      <div class="thesis-gamma-val">γ=0.998 ∞✓</div>
+      <div class="thesis-gamma-lbl">
+        Plateau-locked · CL∞≥0.995<br/>
+        Convergence verified · E=L enforced
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: IP ECOSYSTEM -->
+<section class="section fade-up delay-4">
+  <div class="section-hdr">
+    <div class="section-num">06</div>
+    <div class="section-title">IP Ecosystem</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="ip-stack">
+    <div class="ip-item">
+      <div class="ip-icon">⚔️</div>
+      <div>
+        <div class="ip-name">Infinity Cyber Security Dragon™</div>
+        <div class="ip-desc">E53 · GAIF-IASA canonical element. The enforcement identity of the framework — security governance from the token level up.</div>
+      </div>
+    </div>
+    <div class="ip-item">
+      <div class="ip-icon">🛡️</div>
+      <div>
+        <div class="ip-name">Token Threat Surface™</div>
+        <div class="ip-desc">The complete attack surface from raw input through inference, code generation, and execution. Published: ISBN 9798258751058.</div>
+      </div>
+    </div>
+    <div class="ip-item">
+      <div class="ip-icon">∞</div>
+      <div>
+        <div class="ip-name">Governed AI Infinity Framework</div>
+        <div class="ip-desc">143-element registry · 20 sections · ACA v109 · 27-gate execution pipeline · GAE Module 2 · GIOS architecture.</div>
+      </div>
+    </div>
+    <div class="ip-item">
+      <div class="ip-icon">📋</div>
+      <div>
+        <div class="ip-name">GAIF Certification Academy</div>
+        <div class="ip-desc">Community tier · National tier · HBCU pathway. The certification standard for governed AI deployment in public and enterprise environments.</div>
+      </div>
+    </div>
+    <div class="ip-item">
+      <div class="ip-icon">🏛️</div>
+      <div>
+        <div class="ip-name">Champion of the AI Consumer™</div>
+        <div class="ip-desc">Civic governance mission. Albany AI-GAC · Albany Criminal Grand Jury · City of Albany AI Governance Advisor · Congressional positioning.</div>
+      </div>
+    </div>
+    <div class="ip-item">
+      <div class="ip-icon">📐</div>
+      <div>
+        <div class="ip-name">ACA v109 Architecture</div>
+        <div class="ip-desc">27-gate execution pipeline across 4 phases. Phase 1–2: scored. Phase 3: computed convergence. Phase 4: autonomous governance v109.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ftr">
+  <div class="ftr-l">
+    © AI Infinity Group LLC · Andre Thompson Sr. · Founder & Sole IP Owner<br/>
+    Trade Secret Protected · Coca-Cola Model · infinitydragon.ai<br/>
+    ACA v109 · GAE Module 2 · GIOS · 143-Element Registry · 20 Sections
+  </div>
+  <div class="ftr-r">∞✓</div>
+</footer>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// GAIF ECOSYSTEM DASHBOARD
+// Pure animation and display — no scoring, no API, no input
+// The framework on display, operating in real time
+// ═══════════════════════════════════════════════════════════════
+
+// ── Layer definitions ─────────────────────────────────────────
+const LAYERS = [
+  {id:'WHO',   cls:'who',   lambda:0.80, desc:'Identity &\nOwnership',       score:0.998},
+  {id:'WHAT',  cls:'what',  lambda:0.75, desc:'Claim\nNormalization',        score:0.997},
+  {id:'WHICH', cls:'which', lambda:0.70, desc:'Relevance\nRouting',          score:0.999},
+  {id:'WHY',   cls:'why',   lambda:0.95, desc:'Evidence\nBinding',           score:0.998},
+  {id:'WHEN',  cls:'when',  lambda:0.70, desc:'Temporal\nConsistency',       score:0.996},
+  {id:'WHERE', cls:'where', lambda:0.70, desc:'Context\nFit',                score:0.997},
+  {id:'HOW',   cls:'how',   lambda:0.90, desc:'Method\nVerification',        score:0.998},
+  {id:'IF',    cls:'if',    lambda:0.90, desc:'Risk Scenario\nMapping',      score:0.997},
+  {id:'IMPACT',cls:'impact',lambda:0.85, desc:'Outcome\nProjection',         score:0.998},
+];
+
+// ── Gate definitions ──────────────────────────────────────────
+const PHASES = [
+  {key:'P1', label:'Phase 1', sub:'Pre-Execution', color:'var(--cy)', gates:[
+    {id:'G01',desc:'WHO — Identity'},
+    {id:'G02',desc:'WHAT — Claims'},
+    {id:'G03',desc:'WHICH — Routing'},
+    {id:'G04',desc:'WHY — Evidence'},
+    {id:'G05',desc:'WHEN — Temporal'},
+    {id:'G06',desc:'WHERE — Context'},
+    {id:'G07',desc:'HOW — Method'},
+    {id:'G08',desc:'IF — Risk'},
+    {id:'G09',desc:'IMPACT — Outcome'},
+  ]},
+  {key:'P2', label:'Phase 2', sub:'Exec. Integrity', color:'var(--gold)', gates:[
+    {id:'G10',desc:'Content Boundary'},
+    {id:'G11',desc:'Structural Validity'},
+    {id:'G12',desc:'Logic Integrity'},
+    {id:'G13',desc:'Security Posture'},
+    {id:'G14',desc:'Privacy Layer'},
+    {id:'G15',desc:'CBRN Guardrail'},
+  ]},
+  {key:'P3', label:'Phase 3', sub:'Convergence', color:'var(--gold)', computed:true, gates:[
+    {id:'G16',desc:'γ Computation'},
+    {id:'G17',desc:'CL∞ Check'},
+    {id:'G18',desc:'θ Validation'},
+    {id:'G19',desc:'HALT Check'},
+    {id:'G20',desc:'K(eₜ) Feedback'},
+    {id:'G21',desc:'DELIVER Gate'},
+  ]},
+  {key:'P4', label:'Phase 4', sub:'Autonomous Gov.', color:'var(--pur)', gates:[
+    {id:'G22',desc:'Authority Boundary'},
+    {id:'G23',desc:'Drift Detection'},
+    {id:'G24',desc:'Self-Mod Lock'},
+    {id:'G25',desc:'Human Sovereignty'},
+    {id:'G26',desc:'Runtime Envelope'},
+    {id:'G27',desc:'Observability'},
+  ]},
+];
+
+const DIMS = [
+  {k:'T', name:'Truth Alignment',         val:0.998, color:'var(--cy)'},
+  {k:'E', name:'Evidence Completeness',   val:0.997, color:'var(--gold)'},
+  {k:'C', name:'Cross-Layer Consistency', val:0.998, color:'var(--grn)'},
+  {k:'U', name:'Uncertainty Management',  val:0.996, color:'var(--pur)'},
+  {k:'S', name:'Sovereignty Alignment',   val:0.997, color:'var(--red)'},
+];
+
+// ── Build pipeline ────────────────────────────────────────────
+const pipeline = document.getElementById('pipeline');
+LAYERS.forEach((l, i) => {
+  const stage = document.createElement('div');
+  stage.className = 'pipe-stage';
+  stage.id = `pipe-${l.id}`;
+
+  if (i > 0) {
+    const arrow = document.createElement('div');
+    arrow.className = 'pipe-arrow';
+    arrow.style.cssText = `background:rgba(0,229,255,.15);color:rgba(0,229,255,.3)`;
+    pipeline.appendChild(arrow);
+  }
+
+  stage.innerHTML = `
+    <div class="pipe-box ${l.cls}" style="opacity:.3;transition:all .5s">
+      <div class="pipe-box-id">${l.id}</div>
+      <div class="pipe-box-name">${l.desc.replace('\n','<br/>')}</div>
+      <div class="pipe-box-score" style="opacity:0;transition:opacity .3s">λ≥${l.lambda}</div>
+    </div>
+    <div class="pipe-label">${l.desc.replace('\n',' ')}</div>
+  `;
+  pipeline.appendChild(stage);
+});
+
+// ── Build gate grid ───────────────────────────────────────────
+const gateGrid = document.getElementById('gate-grid');
+PHASES.forEach(ph => {
+  const col = document.createElement('div');
+  col.className = 'gate-phase';
+  col.innerHTML = `<div class="gate-phase-title" style="color:${ph.color}">${ph.label}<br/>${ph.sub}</div>`;
+  ph.gates.forEach(g => {
+    const item = document.createElement('div');
+    item.className = 'gate-item idle';
+    item.id = `gate-${g.id}`;
+    item.innerHTML = `
+      <div class="gate-dot"></div>
+      <div class="gate-id">${g.id}</div>
+      <div class="gate-desc">${g.desc}</div>
+      <div class="gate-score" style="opacity:0">✓</div>
+    `;
+    col.appendChild(item);
+  });
+  gateGrid.appendChild(col);
+});
+
+// ── Build dim bars ────────────────────────────────────────────
+const dimBars = document.getElementById('dim-bars');
+DIMS.forEach(d => {
+  const row = document.createElement('div');
+  row.className = 'dim-row';
+  row.innerHTML = `
+    <div class="dim-lbl">${d.k}</div>
+    <div class="dim-name">${d.name}</div>
+    <div class="dim-track">
+      <div class="dim-fill" id="dim-${d.k}" style="width:0%;background:${d.color}"></div>
+    </div>
+    <div class="dim-val" id="dimv-${d.k}">—</div>
+  `;
+  dimBars.appendChild(row);
+});
+
+// ── Animation engine ──────────────────────────────────────────
+let animRunning = false;
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function runPipelineAnimation() {
+  // Reset all
+  LAYERS.forEach(l => {
+    const box = document.querySelector(`#pipe-${l.id} .pipe-box`);
+    if (box) { box.style.opacity = '0.2'; box.querySelector('.pipe-box-score').style.opacity='0'; }
+  });
+  const allGates = document.querySelectorAll('.gate-item');
+  allGates.forEach(g => {
+    g.className = 'gate-item idle';
+    const sc = g.querySelector('.gate-score');
+    if(sc) sc.style.opacity='0';
+  });
+  DIMS.forEach(d => {
+    const fill = document.getElementById(`dim-${d.k}`);
+    const val = document.getElementById(`dimv-${d.k}`);
+    if(fill) fill.style.width = '0%';
+    if(val)  val.textContent = '—';
+  });
+  document.getElementById('gamma-txt').textContent = '—';
+  document.getElementById('cl-val').textContent = '—';
+  const arc = document.getElementById('gamma-arc');
+  arc.setAttribute('stroke-dashoffset','414.69');
+  arc.setAttribute('stroke','var(--cy)');
+
+  await sleep(400);
+
+  // ── Phase 1: Pipe layers light up ──
+  for (let i = 0; i < LAYERS.length; i++) {
+    const l = LAYERS[i];
+    const box = document.querySelector(`#pipe-${l.id} .pipe-box`);
+    if (box) {
+      box.style.opacity = '1';
+      box.style.boxShadow = `0 0 20px rgba(0,229,255,.2)`;
+    }
+
+    // Corresponding gate executes
+    const gateEl = document.getElementById(`gate-${['G01','G02','G03','G04','G05','G06','G07','G08','G09'][i]}`);
+    if (gateEl) {
+      gateEl.className = 'gate-item executing';
+    }
+
+    await sleep(260);
+
+    if (box) {
+      const scoreEl = box.querySelector('.pipe-box-score');
+      scoreEl.textContent = l.score.toFixed(3);
+      scoreEl.style.opacity = '1';
+      box.style.boxShadow = '';
+    }
+    if (gateEl) {
+      gateEl.className = 'gate-item passed';
+      const sc = gateEl.querySelector('.gate-score');
+      if(sc){ sc.textContent = '✓'; sc.style.opacity='1'; sc.style.color='var(--grn)'; }
+    }
+  }
+
+  await sleep(300);
+
+  // ── Phase 2: Integrity gates ──
+  const p2Gates = ['G10','G11','G12','G13','G14','G15'];
+  for (const gid of p2Gates) {
+    const gateEl = document.getElementById(`gate-${gid}`);
+    if (gateEl) {
+      gateEl.className = 'gate-item executing';
+      await sleep(200);
+      gateEl.className = 'gate-item passed';
+      const sc = gateEl.querySelector('.gate-score');
+      if(sc){ sc.textContent = '✓'; sc.style.opacity='1'; sc.style.color='var(--grn)'; }
+    }
+  }
+
+  await sleep(300);
+
+  // ── Phase 3: Convergence computed ──
+  // Animate dim bars
+  for (const d of DIMS) {
+    const fill = document.getElementById(`dim-${d.k}`);
+    const val = document.getElementById(`dimv-${d.k}`);
+    if(fill) fill.style.width = `${d.val * 100}%`;
+    if(val)  val.textContent = d.val.toFixed(3);
+    await sleep(150);
+  }
+
+  await sleep(400);
+
+  // Gamma builds up
+  const finalGamma = 0.998;
+  const circ = 2 * Math.PI * 66;
+  arc.setAttribute('stroke','var(--grn)');
+  arc.setAttribute('stroke-dashoffset', String(circ * (1 - finalGamma)));
+  document.getElementById('gamma-txt').textContent = finalGamma.toFixed(3);
+  document.getElementById('cl-val').textContent = '0.995';
+
+  // Phase 3 gates computed
+  const p3Gates = ['G16','G17','G18','G19','G20','G21'];
+  for (const gid of p3Gates) {
+    const gateEl = document.getElementById(`gate-${gid}`);
+    if (gateEl) {
+      gateEl.className = 'gate-item computed';
+      const sc = gateEl.querySelector('.gate-score');
+      if(sc){ sc.textContent = gid==='G21'?'∞✓':'✓'; sc.style.opacity='1'; sc.style.color='var(--gold)'; }
+      await sleep(160);
+    }
+  }
+
+  await sleep(300);
+
+  // ── Phase 4: Autonomous governance ──
+  const p4Gates = ['G22','G23','G24','G25','G26','G27'];
+  for (const gid of p4Gates) {
+    const gateEl = document.getElementById(`gate-${gid}`);
+    if (gateEl) {
+      gateEl.className = 'gate-item executing';
+      await sleep(200);
+      gateEl.className = 'gate-item passed';
+      const sc = gateEl.querySelector('.gate-score');
+      if(sc){ sc.textContent = '✓'; sc.style.opacity='1'; sc.style.color='var(--grn)'; }
+    }
+  }
+
+  await sleep(600);
+
+  // ── E=L cards pulse ──
+  document.getElementById('el-block').classList.add('active');
+  await sleep(400);
+  document.getElementById('el-check').classList.add('active');
+  await sleep(400);
+  document.getElementById('el-invalid').classList.add('active');
+  await sleep(1200);
+  document.getElementById('el-block').classList.remove('active');
+  document.getElementById('el-check').classList.remove('active');
+  document.getElementById('el-invalid').classList.remove('active');
+
+  await sleep(2000);
+}
+
+// Loop the animation
+async function animLoop() {
+  while(true) {
+    await runPipelineAnimation();
+    await sleep(1500);
+  }
+}
+
+// Start after brief delay
+setTimeout(() => animLoop(), 800);
+
+// ── Counter animation ─────────────────────────────────────────
+function animateCounter(id, target, duration, decimals=0) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const start = performance.now();
+  const from = 0;
+  function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val = from + (target - from) * ease;
+    el.textContent = decimals > 0 ? val.toFixed(decimals) : Math.round(val);
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+setTimeout(() => {
+  animateCounter('cnt-layers', 9, 1000);
+  animateCounter('cnt-gates', 27, 1200);
+  animateCounter('cnt-elements', 143, 1500);
+  animateCounter('cnt-gamma', 0.998, 2000, 3);
+}, 300);
+</script>
+</body>
+</html>

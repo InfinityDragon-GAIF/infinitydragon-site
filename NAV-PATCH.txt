@@ -1,0 +1,52 @@
+NAV PATCH — ADD THIS TO index.html
+════════════════════════════════════════════════════════
+
+FIND this line in your index.html nav:
+
+  <a href="#contact">Contact →</a>
+
+ADD this line directly BEFORE it:
+
+  <a href="/framework-live">Framework Live →</a>
+
+
+RESULT — your nav should read:
+
+  <a href="#architecture">Architecture</a>
+  <a href="#ip-stack">IP Stack</a>
+  More ▾
+    [Books & eBooks]
+    [Hear the Framework]
+    [Token Threat Surface™]
+    [Governing Thesis]
+    [Commercial]
+    [Publications]
+  <a href="/framework-live">Framework Live →</a>
+  <a href="#contact">Contact →</a>
+
+
+ALSO — FIND the hero CTA buttons in index.html:
+
+  [Explore the Framework]  [Get in Touch]
+
+ADD a third button after them:
+
+  <a href="/framework-live" class="[your-cta-class]">
+    See It Operating →
+  </a>
+
+Match the class of your existing CTA buttons so it
+inherits the same styling automatically.
+
+
+CLEAN URL NOTE
+══════════════
+The vercel.json routes both of these to the dashboard:
+
+  https://infinitydragon.ai/framework-live
+  https://infinitydragon.ai/gaif-ecosystem-dashboard
+
+Use /framework-live in all links — cleaner for visitors,
+LinkedIn posts, and LinkedIn bio.
+
+© AI Infinity Group LLC · Andre Thompson Sr. · ∞✓
