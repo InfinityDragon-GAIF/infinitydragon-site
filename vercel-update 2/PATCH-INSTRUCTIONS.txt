@@ -1,0 +1,61 @@
+GAIF ECOSYSTEM DASHBOARD — INDEX.HTML PATCH
+AI Infinity Group LLC | infinitydragon.ai
+=======================================================
+
+TWO CHANGES TO MAKE IN YOUR index.html
+Both are copy-paste replacements. Takes under 2 minutes.
+
+───────────────────────────────────────────────────────
+CHANGE 1 OF 2 — NAV BAR (add Framework Live button)
+───────────────────────────────────────────────────────
+
+FIND this exact block (search for "nav-right"):
+
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Contact →</a>
+  </div>
+
+REPLACE WITH (content of patch-nav.html):
+
+  <div class="nav-right">
+    <a href="/gaif-ecosystem-dashboard.html" class="nav-cta" style="color:var(--gold);border-color:var(--gold);margin-right:0.4rem;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--obsidian)'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">Framework Live →</a>
+    <a href="#contact" class="nav-cta">Contact →</a>
+  </div>
+
+
+───────────────────────────────────────────────────────
+CHANGE 2 OF 2 — HERO SECTION (add third CTA button)
+───────────────────────────────────────────────────────
+
+FIND this exact block (search for "hero-actions"):
+
+  <div class="hero-actions">
+    <a href="#architecture" class="btn-primary">Explore the Framework</a>
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+  </div>
+
+REPLACE WITH (content of patch-hero.html):
+
+  <div class="hero-actions">
+    <a href="#architecture" class="btn-primary">Explore the Framework</a>
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+    <a href="/gaif-ecosystem-dashboard.html" class="btn-ghost" style="border-color:var(--electric);color:var(--electric);" onmouseover="this.style.background='rgba(0,200,255,0.1)'" onmouseout="this.style.background='transparent'">See It Operating →</a>
+  </div>
+
+
+=======================================================
+AFTER MAKING BOTH CHANGES:
+
+1. Save index.html
+2. Your vercel-update folder now contains:
+   - index.html (updated — after you make both edits above)
+   - gaif-ecosystem-dashboard.html (the live dashboard)
+3. Upload/push both files to your Vercel project
+4. Vercel deploys automatically
+
+RESULT:
+  Nav bar: Framework Live → | Contact →
+  Hero:    Explore | Get in Touch | See It Operating →
+  Dashboard live at: infinitydragon.ai/gaif-ecosystem-dashboard.html
+
+© AI Infinity Group LLC · Andre Thompson Sr. · ∞✓
