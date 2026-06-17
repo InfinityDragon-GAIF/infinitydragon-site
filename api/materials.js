@@ -1,143 +1,25 @@
 import { verifyToken, parseCookies, COOKIE } from "../lib/cohortAuth.js";
 
 /* ─────────────────────────────────────────────────────────────────────────
- *  Cohort 2 · "Governed AI for Entrepreneurs"
- *  EDIT this to publish materials. Titles & summaries are set; each item's
- *  `href` is a placeholder ("#") — replace with the real file URL (uploaded
- *  to /public, an external link, or a gated Supabase signed URL).
- *
- *  These are sent to the browser ONLY after the access code passes, so the
- *  gate genuinely protects them. Note: files placed in /public are readable
- *  by direct URL — for material that must stay gated, ask for the Supabase route.
+ *  Cohort 2 · "Governed AI for Entrepreneurs" — full lesson content.
+ *  Sent to the browser ONLY after the access code passes, so the gate
+ *  genuinely protects the material. Edit module text in the MODULES array.
+ *  Source: CohortTwoAcademy curriculum (Andre Thompson Sr., AI Infinity Group LLC).
  * ───────────────────────────────────────────────────────────────────────── */
 
 const academy = {
   name: "Governed Intelligence Academy",
   cohort: "Cohort 2 · Governed AI for Entrepreneurs",
   partner: "Albany State University",
-  intro: "Your training modules. Work through them in order — each checkpoint builds on the one before it.",
+  intro: "Eleven modules. Work through them in order — each checkpoint builds on the one before it. The human stays in charge.",
 };
 
-const modules = [
-  {
-    n: 1,
-    title: "AI for Founders + Meet the Framework",
-    summary: "Your starting point: what AI can and can't do for a founder, and a first pass through the nine-interrogative lens you'll use all cohort.",
-    items: [
-      { title: "Module slides", kind: "Slides", href: "#" },
-      { title: "The nine interrogatives — reference", kind: "Reading", href: "#" },
-      { title: "Module 1 worksheet", kind: "Worksheet", href: "#" },
-    ],
-  },
-  {
-    n: 2,
-    title: "The AI Toolkit",
-    summary: "A practical survey of the AI tools entrepreneurs actually use, and how to put each one under governance before you trust it.",
-    items: [
-      { title: "Module slides", kind: "Slides", href: "#" },
-      { title: "Toolkit worksheet", kind: "Worksheet", href: "#" },
-    ],
-  },
-  {
-    n: 3,
-    title: "Finding the Opportunity",
-    summary: "Spot a real, governable business opportunity. Your first milestone: run the lens on an idea and defend it.",
-    items: [
-      { title: "Module slides", kind: "Slides", href: "#" },
-      { title: "Opportunity worksheet", kind: "Worksheet", href: "#" },
-      { title: "Milestone 1 submission", kind: "Live", href: "#" },
-    ],
-  },
-  {
-    n: 4,
-    title: "Ethical AI + Failure Case Bank",
-    summary: "Where AI goes wrong for businesses — a working bank of real failure cases and the ethical lines that prevent them.",
-    items: [
-      { title: "Module slides", kind: "Slides", href: "#" },
-      { title: "Failure Case Bank", kind: "Reading", href: "#" },
-      { title: "Module 4 worksheet", kind: "Worksheet", href: "#" },
-    ],
-  },
-  {
-    n: 5,
-    title: "Standards & Compliance",
-    summary: "The standards that matter — NIST AI RMF, ISO/IEC 42001, the EU AI Act — and how the framework maps to each.",
-    items: [
-      { title: "Module slides", kind: "Slides", href: "#" },
-      { title: "Standards crosswalk", kind: "Reading", href: "#" },
-      { title: "Module 5 worksheet", kind: "Worksheet", href: "#" },
-    ],
-  },
-  {
-    n: "5.5",
-    title: "Vendor Evaluation",
-    summary: "Judging an AI vendor before you sign — a governance scorecard for tools, models, and providers.",
-    items: [
-      { title: "Vendor scorecard", kind: "Worksheet", href: "#" },
-      { title: "Walkthrough slides", kind: "Slides", href: "#" },
-    ],
-  },
-  {
-    n: 6,
-    title: "Risk & the Threat Surface",
-    summary: "Risk from the token up: the Token Threat Surface and how to size the danger in any AI you deploy.",
-    items: [
-      { title: "Module slides", kind: "Slides", href: "#" },
-      { title: "Threat Surface worksheet", kind: "Worksheet", href: "#" },
-    ],
-  },
-  {
-    n: 7,
-    title: "Judging AI Output",
-    summary: "Tell good AI output from confident nonsense. Milestone: render real verdicts on live outputs.",
-    items: [
-      { title: "Module slides", kind: "Slides", href: "#" },
-      { title: "Output-judging worksheet", kind: "Worksheet", href: "#" },
-      { title: "Milestone 2 submission", kind: "Live", href: "#" },
-    ],
-  },
-  {
-    n: 8,
-    title: "AI-Enabled Business Models",
-    summary: "Designing a venture where governed AI is the engine, not a bolt-on — models, margins, and defensibility.",
-    items: [
-      { title: "Module slides", kind: "Slides", href: "#" },
-      { title: "Business model canvas", kind: "Worksheet", href: "#" },
-    ],
-  },
-  {
-    n: 9,
-    title: "Build & Review",
-    summary: "Build your governed solution and put it through real review — the same discipline you'll carry into practice.",
-    items: [
-      { title: "Build brief", kind: "Reading", href: "#" },
-      { title: "Review checklist", kind: "Worksheet", href: "#" },
-    ],
-  },
-  {
-    n: 10,
-    title: "Showcase + Capstone",
-    summary: "Present your capstone: a governed AI venture, end to end, defended in front of the cohort.",
-    items: [
-      { title: "Capstone brief", kind: "Reading", href: "#" },
-      { title: "Showcase session", kind: "Live", href: "#" },
-    ],
-  },
-  {
-    n: 11,
-    title: "Certification",
-    summary: "The credential step — your Governance Review Packet goes to facilitator review, and the CLGIC credential issues on approval.",
-    items: [
-      { title: "Governance Review Packet", kind: "Reading", href: "#" },
-      { title: "Final assessment", kind: "Quiz", href: "#" },
-    ],
-  },
-];
+const MODULES = [{"n":"01","title":"AI for Founders — Meet the Framework","type":"foundation","minutes":35,"outcomes":["Apply the nine-question governance lens to an AI output","Explain the one rule: the human decides"],"segments":[{"n":"A","kind":"prose","kicker":"The one rule","heading":"AI advises. You decide.","body":["Everything here hangs on one rule: **the human stays in charge.** An AI tool is an advisor — fast, often useful, sometimes confidently wrong. It hands you a draft; you make the call. In the *Governed AI Infinity Framework* this is written `HS ≻ AI`.","A bad suggestion in a chat window is harmless. The same suggestion posted to customers or priced into your product carries your name. So before any AI output becomes an action, it gets governed."]},{"n":"B","kind":"lens","kicker":"The nine-question lens","heading":"The nine-question Governance Lens","intro":"Run any AI output through these nine questions. Tap each to apply it to a hot-sauce startup's “triple your followers” claim. Open at least three.","applied":{"WHO":"It's your brand and your name on the post. You own what goes out.","WHAT":"“Triple followers in a week” is a testable claim, not a vibe.","WHICH":"Only two of five tactics fit a $0-budget food brand.","WHY":"No source given. “The AI said so” is not evidence.","WHEN":"Platform rules change monthly; stale advice can be wrong.","WHERE":"Generic “go viral” ignores your local Albany audience.","HOW":"Run it small: one post, measure a week.","IF":"If it flops you lose a day; if it misleads, you lose trust.","IMPACT":"The lens turns a guess into a governed decision."}},{"n":"C","kind":"checkpoint","kicker":"Checkpoint","heading":"Capture your first governed decision","body":"Take one real AI output from your venture. Record the claim, your evidence, how you'd verify it, the risk, and your call.","milestone":false}]},{"n":"02","title":"The AI Toolkit — Content, Marketing, Productivity","type":"practice","minutes":40,"outcomes":["Use AI tools for content, marketing, and automation","Run a Quick Lens Check on every output before using it"],"segments":[{"n":"A","kind":"prose","kicker":"Hands on the tools","heading":"Make AI do real work for your venture","body":["This module is practice: draft a product description, a week of social posts, a customer email, and a simple automation — using a general AI assistant plus an image/content tool. Speed is the point.","But speed without governance is how founders ship the wrong thing fast. Every asset you generate gets a **Quick Lens Check** before it goes live: who owns it, what is it claiming, how would you verify it, what's the risk if it's wrong."]},{"n":"B","kind":"checkpoint","kicker":"Checkpoint","heading":"Govern one marketing asset","body":"Generate one marketing asset with AI. Run a Quick Lens Check, note the biggest risk, and record whether you'll act, adjust, or reject.","milestone":false}]},{"n":"03","title":"Finding the Opportunity","type":"application","minutes":45,"outcomes":["Identify and validate one AI-powered business opportunity","Score whether AI earns its place before committing"],"segments":[{"n":"A","kind":"prose","kicker":"The frame","heading":"AI is a tool looking for a job","body":["Most founders bolt AI on because it's exciting, not because it earns its place. Governed thinking starts from a **real task in your venture** and asks whether AI does it better, cheaper, or faster — and what it puts at risk."]},{"n":"B","kind":"lens","kicker":"The nine-question lens","heading":"Lens an opportunity, not just an output","intro":"Same nine questions, pointed at a business idea this time. Open at least three.","applied":{"WHO":"Who's accountable if the AI-run process fails a customer — you.","WHAT":"What's the task, exactly? “Use AI for marketing” is too vague.","WHICH":"Which one task first? Highest pain, lowest risk.","WHY":"Why AI here and not a simpler tool or a person?","WHEN":"Does it pay off now, or only at scale you don't have?","WHERE":"Customer-facing raises the bar over internal use.","HOW":"How will you check its work? Silent automation is silent risk.","IF":"If it's wrong at 2am with no human watching, what breaks?","IMPACT":"Score trust, time, and money before committing."}},{"n":"C","kind":"checkpoint","kicker":"Milestone checkpoint","heading":"Validate one opportunity (full GPR)","body":"This is a milestone. Pick one AI opportunity for your venture. State the claim that it earns its place, your evidence, verification method, full five-axis risk, and your call.","milestone":true}]},{"n":"04","title":"Ethical AI Principles + Failure Case Bank","type":"application","minutes":40,"outcomes":["Explain privacy, transparency, fairness, and accountability in plain terms","Map a real AI failure to cause, consequence, and mitigation"],"segments":[{"n":"A","kind":"prose","kicker":"The principles","heading":"Five words that keep AI honest","body":["Responsible AI comes down to five plain ideas: **privacy** (whose data is this?), **transparency** (can you explain the decision?), **fairness** (who could this harm?), **accountability** (who answers for it?), and **security** (can it be misused?). You don't need a law degree — you need to ask these before you ship."]},{"n":"B","kind":"prose","kicker":"Learn from real failures","heading":"The Failure Case Bank","body":["Every famous AI failure — biased hiring tools, hallucinated legal citations, chatbots that leaked data — happened because one of those five questions went unasked. We study real cases so your venture doesn't add to the bank."]},{"n":"B","kind":"checkpoint","kicker":"Checkpoint","heading":"Run a Failure Mode Analysis","body":"Pick a failure case from the bank that could happen to your venture. Map it: the failure, its cause, the consequence, and your mitigation. Record your call.","milestone":false}]},{"n":"05","title":"Rules of the Road — Standards & Compliance","type":"application","minutes":40,"outcomes":["Map a venture AI use to a recognized standard at a working level","Name what NIST AI RMF, ISO/IEC 42001, and the EU AI Act each cover"],"segments":[{"n":"A","kind":"prose","kicker":"Why standards exist","heading":"You're not the first to govern AI","body":["Whole institutions have written down how to manage AI risk: the **NIST AI Risk Management Framework**, **ISO/IEC 42001**, the **EU AI Act**, plus the OECD AI Principles and UNESCO's ethics recommendation. You won't memorize them — you'll learn enough to map your venture's AI use to the right control and speak the language grant programs and partners expect."]},{"n":"B","kind":"checkpoint","kicker":"Checkpoint","heading":"Map one use to one standard","body":"Take one way your venture uses AI. Name the standard and the specific control it falls under, state how you meet it, and record your call.","milestone":false}]},{"n":"05.5","title":"AI Procurement & Vendor Evaluation","type":"application","minutes":30,"outcomes":["Score an AI tool with a vendor governance scorecard","Reject a tool whose risk outweighs its payoff"],"segments":[{"n":"A","kind":"prose","kicker":"Choosing tools is a governance act","heading":"The vendor is part of your threat surface","body":["Every AI tool you adopt inherits its risks into your venture — its data practices, its reliability, its terms. Picking a tool is not a convenience decision, it's a governance decision. The **Vendor Scorecard** makes it explicit: data handling, transparency, reliability, cost, and exit."]},{"n":"B","kind":"checkpoint","kicker":"Checkpoint","heading":"Score one vendor","body":"Pick one AI tool you use or are considering. Score it on the scorecard dimensions, name the biggest concern, and record act / adjust / reject.","milestone":false}]},{"n":"06","title":"Risk — Privacy, Security & the Threat Surface","type":"application","minutes":40,"outcomes":["Identify your venture's biggest AI risk and a mitigation","Explain the Token Threat Surface in plain founder terms"],"segments":[{"n":"A","kind":"prose","kicker":"Where the risk actually starts","heading":"The Token Threat Surface, in plain terms","body":["Risk doesn't start when AI gives a bad answer — it starts at the very input, the **Token Threat Surface™**: the whole path from what you type, through the model, to the action you take. Ungoverned, every step is a place something can go wrong. Governed, each step has a check.","For a founder this means three habits: protect what's **confidential** (customer data in prompts), preserve **integrity** (verify before acting), and keep things **available** (a human can always halt)."]},{"n":"B","kind":"checkpoint","kicker":"Checkpoint","heading":"Name your biggest AI risk","body":"Identify the single biggest AI-related risk in your venture right now. Score its five-axis risk, state your mitigation, and record your call.","milestone":false}]},{"n":"07","title":"Judging AI Output","type":"application","minutes":45,"outcomes":["Run the full nine-question lens and reach a governed verdict","Decide act, adjust, or reject with evidence"],"segments":[{"n":"A","kind":"prose","kicker":"From gut feel to verdict","heading":"The workshop that decides","body":["By now the lens is familiar. This milestone is about doing it under pressure on a real, consequential output — and reaching a **verdict**: deliver, adjust, or halt. Lens for thinking, workflow for deciding."]},{"n":"B","kind":"lens","kicker":"The nine-question lens","heading":"The full nine, on a real output","intro":"Bring a real AI output you're tempted to act on. Run all nine. Open at least three here, then complete the rest in the live workshop.","applied":{"WHO":"Confirm ownership and accountability before anything ships.","WHAT":"Strip it to the literal claim being made.","WHICH":"Separate the signal from the filler it gave you.","WHY":"Demand the evidence; absence of evidence is a finding.","WHEN":"Check recency — is the basis still current?","WHERE":"Does it fit your specific venture and audience?","HOW":"Define the concrete test you'd run to verify.","IF":"Name the worst realistic outcome of being wrong.","IMPACT":"Project the real effect, then decide."}},{"n":"C","kind":"checkpoint","kicker":"Milestone checkpoint","heading":"Reach a governed verdict (full GPR)","body":"Milestone. Take a real, consequential AI output. Full capture: claim, evidence, verification, five-axis risk, and a clear act / adjust / reject verdict.","milestone":true}]},{"n":"08","title":"AI-Enabled Business Models","type":"application","minutes":40,"outcomes":["Design an AI-enabled business model with guardrails built in","Name one responsible-use guardrail for your model"],"segments":[{"n":"A","kind":"prose","kicker":"Build the guardrail in, not on","heading":"Governance as a design feature","body":["The strongest AI ventures don't bolt governance on at the end — they design it in. Where AI touches the customer, a human reviews. Where data is sensitive, it never enters a prompt. Where the model decides, the decision is logged. Guardrails aren't friction; for an AI venture they're the trust that makes it sellable."]},{"n":"B","kind":"checkpoint","kicker":"Checkpoint","heading":"Draft your model + one guardrail","body":"Sketch how AI powers your business model. Name the single most important responsible-use guardrail, why it matters, and record your call.","milestone":false}]},{"n":"09","title":"Build & Review Your Venture's AI","type":"application","minutes":45,"outcomes":["Implement one AI-enabled feature in your venture","Self-review it against the governance lens and log the decisions"],"segments":[{"n":"A","kind":"prose","kicker":"Ship it, then govern what you shipped","heading":"Build, then self-review","body":["This module is hands-on building plus an honest self-review. Implement one AI-enabled piece of your venture, then turn the lens on your own work: what did you assume, what did you verify, what could fail, who stays in charge. Every decision goes in your Governance Ledger."]},{"n":"B","kind":"checkpoint","kicker":"Checkpoint","heading":"Review your own build","body":"Review the AI feature you built. Capture the riskiest assumption, how you'd verify it, the five-axis risk, and your call. Log it to your ledger.","milestone":false}]},{"n":"10","title":"Showcase Prep + Capstone","type":"capstone","minutes":60,"outcomes":["Produce a governance-reviewed venture pitch","Assemble the Capstone Governance Review Packet"],"segments":[{"n":"A","kind":"prose","kicker":"The proof, assembled","heading":"Your governance, made defensible","body":["The capstone isn't just a pitch — it's the pitch **plus the evidence you governed it**. You assemble the Governance Review Packet: venture pitch, governance statement, risk register, ethical-use statement, your full Governance Ledger, and a final Governance Position Record. This is what makes your maturity defensible to universities, accelerators, and grant programs — not claimed, evidenced."]},{"n":"B","kind":"checkpoint","kicker":"Milestone checkpoint","heading":"Submit your capstone packet (full GPR)","body":"Summarize your Governance Review Packet: the venture claim, the evidence behind it, how it was verified, overall risk, and your final governed position.","milestone":true}]},{"n":"11","title":"Governance Certification & Credential","type":"certification","minutes":25,"outcomes":["Confirm the Review Packet is complete and submit for facilitator review","Understand how the CLGIC credential is issued"],"segments":[{"n":"A","kind":"prose","kicker":"From capstone to credential","heading":"Earning the CLGIC credential","body":["Certification is not a quiz at the end — it's confirmation that your governed work holds up. Your Capstone Review Packet goes to facilitator review; once evidence is verified and approved, the credential issues through the certification engine. The state moves `in_progress → pending_review → eligible → issued`, and no certificate issues until the evidence is real.","This closes the loop the whole program built: you didn't just learn to use AI, and you didn't just govern it — you finish holding proof that you did."]},{"n":"B","kind":"checkpoint","kicker":"Milestone checkpoint","heading":"Submit for certification","body":"Attest that your Review Packet is complete and accurate. State what you're submitting, the evidence it rests on, and confirm your final position. This routes to facilitator review.","milestone":true}]}];
 
 export default function handler(req, res) {
   const cookies = parseCookies(req);
   if (!verifyToken(cookies[COOKIE])) {
     return res.status(401).json({ ok: false, error: "Not authorized" });
   }
-  return res.status(200).json({ ok: true, academy, modules });
+  return res.status(200).json({ ok: true, academy, modules: MODULES });
 }
