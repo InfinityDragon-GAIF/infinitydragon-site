@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Education &amp; Training — infinitydragon.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a1a1f; --panel:#11262c; --line:#1e3942; --bone:#ece7db;
+    --slate:#8aa0a6; --slate-dim:#5e7379; --brass:#c8a553; --jade:#3fb98c; --danger:#e0795b;
+    --display:'Spectral',Georgia,serif; --body:'Public Sans',system-ui,sans-serif; --data:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100dvh;color:var(--bone);font-family:var(--body);
+    background:radial-gradient(900px 520px at 82% -12%,rgba(200,165,83,.09),transparent 60%),var(--bg);
+    -webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .shell{max-width:1080px;margin:0 auto;padding:0 24px}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .mark{color:var(--brass);font-size:22px;line-height:1}
+  .brandText{font-size:15px;font-weight:600}
+  .navTag{font-family:var(--data);font-size:11px;letter-spacing:.18em;color:var(--slate);text-transform:uppercase}
+  .signout{font-family:var(--body);font-size:13px;color:var(--slate);background:transparent;border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer}
+  .signout:hover{border-color:var(--slate);color:var(--bone)}
+  .hero{padding:72px 0 44px;max-width:760px}
+  .eyebrow{font-family:var(--data);font-size:12px;letter-spacing:.26em;color:var(--brass);text-transform:uppercase;margin:0 0 18px}
+  h1{font-family:var(--display);font-weight:500;font-size:clamp(40px,7vw,76px);line-height:1.02;letter-spacing:-.01em;margin:0}
+  .lede{font-size:clamp(16px,2.2vw,19px);line-height:1.55;color:var(--slate);margin:22px 0 0;max-width:58ch}
+  .ethic{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .tag{font-family:var(--data);font-size:11px;letter-spacing:.06em;color:var(--slate);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+  .programs{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:24px 0 44px}
+  .card{display:flex;flex-direction:column;min-height:248px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px}
+  .card.live{border-color:rgba(63,185,140,.35)}
+  .pill{align-self:flex-start;font-family:var(--data);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:999px;margin-bottom:18px}
+  .pill.livep{color:var(--jade);background:rgba(63,185,140,.1);border:1px solid rgba(63,185,140,.3)}
+  .pill.soon{color:var(--slate);background:rgba(138,160,166,.07);border:1px solid var(--line)}
+  .cardTitle{font-family:var(--display);font-weight:500;font-size:25px;margin:0 0 10px}
+  .cardDesc{font-size:15px;line-height:1.55;color:var(--slate);margin:0 0 24px}
+  .cardFoot{margin-top:auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .meta{font-family:var(--data);font-size:11px;letter-spacing:.1em;color:var(--slate-dim);text-transform:uppercase}
+  .btn{font-family:var(--body);font-weight:600;font-size:15px;cursor:pointer;border-radius:9px;padding:12px 20px;border:1px solid transparent;text-decoration:none;display:inline-block}
+  .primary{background:var(--brass);color:#1a1205}
+  .primary:hover{background:#d8b562}
+  .primary:disabled{opacity:.6;cursor:default}
+  .ghost{background:transparent;color:var(--bone);border-color:var(--line)}
+  .ghost:hover{border-color:var(--slate)}
+  .gateWrap{padding:8px 0 80px}
+  .gate{position:relative;max-width:540px;margin:0 auto;padding:44px 40px 40px;text-align:center;border:1px solid var(--brass);border-radius:16px;background:linear-gradient(180deg,rgba(200,165,83,.07),rgba(200,165,83,.02))}
+  .seal{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;margin-bottom:16px;font-size:26px;color:var(--brass);border:1px solid var(--brass);border-radius:50%}
+  .gateLabel{font-family:var(--data);font-size:11px;letter-spacing:.24em;color:var(--brass);text-transform:uppercase;margin:0}
+  .gateTitle{font-family:var(--display);font-weight:500;font-size:28px;margin:10px 0 8px}
+  .gateHelp{color:var(--slate);font-size:14px;margin:0 0 24px}
+  .gateForm{display:flex;gap:10px;max-width:400px;margin:0 auto}
+  .input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:12px 14px;color:var(--bone);font-family:var(--data);letter-spacing:.06em;font-size:14px}
+  .input::placeholder{color:var(--slate-dim)}
+  .input:focus{outline:2px solid var(--brass);outline-offset:1px;border-color:var(--brass)}
+  .gateError{color:var(--danger);font-size:13px;margin:16px 0 0;min-height:18px}
+  /* materials */
+  .matHead{padding:56px 0 32px;max-width:760px}
+  .modules{list-style:none;margin:0;padding:0 0 24px;display:flex;flex-direction:column;gap:16px;max-width:820px}
+  .module{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 28px}
+  .moduleHead{display:flex;gap:18px;align-items:baseline;margin-bottom:18px}
+  .moduleNum{font-family:var(--data);font-size:14px;color:var(--brass);flex:none;padding-top:2px}
+  .moduleTitle{font-family:var(--display);font-weight:500;font-size:22px;margin:0 0 6px}
+  .moduleSummary{font-size:14px;line-height:1.5;color:var(--slate);margin:0}
+  .items{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .item{display:flex;align-items:center;gap:14px;padding:14px 4px;text-decoration:none;border-top:1px solid var(--line)}
+  .items .item:first-child{border-top:0}
+  .item:hover .itemTitle{color:var(--brass)}
+  .kind{flex:none;width:78px;font-family:var(--data);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);border:1px solid var(--line);border-radius:6px;padding:4px 0;text-align:center}
+  .kind.Live{color:var(--jade);border-color:rgba(63,185,140,.35)}
+  .kind.Quiz{color:var(--brass);border-color:rgba(200,165,83,.35)}
+  .itemTitle{flex:1;font-size:15px}
+  .itemArrow{color:var(--slate-dim)}
+  .footer{display:flex;align-items:center;gap:10px;padding:28px 0 40px;border-top:1px solid var(--line);color:var(--slate-dim);font-size:13px}
+  .hidden{display:none !important}
+  @media(max-width:720px){.programs{grid-template-columns:1fr}.hero{padding:48px 0 32px}.gateForm{flex-direction:column}}
+</style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="nav">
+      <a class="brand" href="/"><span class="mark">∞</span><span class="brandText">infinitydragon.ai</span></a>
+      <span class="navTag" id="navTag">Education &amp; Training</span>
+      <button class="signout hidden" id="signout">Sign out</button>
+    </nav>
+
+    <!-- ── HUB (signed out) ── -->
+    <div id="hub">
+      <header class="hero">
+        <p class="eyebrow">Governed Intelligence Academy</p>
+        <h1>Education &amp; Training</h1>
+        <p class="lede">Where practitioners learn to govern artificial intelligence — not just use it. Coursework, certification, and the working framework behind it.</p>
+        <div class="ethic">
+          <span class="tag">Human authority over AI</span>
+          <span class="tag">Audited by design</span>
+          <span class="tag">Governed from the token up</span>
+        </div>
+      </header>
+
+      <section class="programs">
+        <article class="card live">
+          <span class="pill livep">Live now</span>
+          <h2 class="cardTitle">ASU Cohort 2 Academy</h2>
+          <p class="cardDesc">The current cohort, in partnership with Albany State University. Module-by-module training in the Governed AI Infinity Framework, with worksheets and graded checkpoints.</p>
+          <div class="cardFoot">
+            <button class="btn primary" id="enter">Enter the Academy</button>
+            <span class="meta">Access code required</span>
+          </div>
+        </article>
+        <article class="card">
+          <span class="pill soon">Enrolling soon</span>
+          <h2 class="cardTitle">GI Consultant Certification</h2>
+          <p class="cardDesc">The CLGIC credential — Certified Licensed Governed Intelligence Consultant. Associate, CLGIC, and Master tracks for practitioners taking governance to clients.</p>
+          <div class="cardFoot">
+            <a class="btn ghost" href="mailto:learn@infinitydragon.ai?subject=Notify%20me%20%E2%80%94%20CLGIC%20Certification">Get notified</a>
+            <span class="meta">Opens after Cohort 2</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="gateWrap hidden" id="gateWrap">
+        <div class="gate">
+          <span class="seal">∞</span>
+          <p class="gateLabel">Authorization required</p>
+          <h2 class="gateTitle">Enter the Academy</h2>
+          <p class="gateHelp">Use the cohort access code from your enrollment email.</p>
+          <div class="gateForm">
+            <input class="input" id="code" type="text" autocomplete="off" spellcheck="false" placeholder="Cohort access code" aria-label="Cohort access code" />
+            <button class="btn primary" id="authorize">Authorize</button>
+          </div>
+          <p class="gateError" id="err" role="alert"></p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ── MATERIALS (signed in) ── -->
+    <div id="materials" class="hidden">
+      <header class="matHead">
+        <p class="eyebrow" id="matEyebrow"></p>
+        <h1 id="matTitle"></h1>
+        <p class="lede" id="matIntro"></p>
+      </header>
+      <ol class="modules" id="moduleList"></ol>
+    </div>
+
+    <footer class="footer">
+      <span class="mark">∞</span>
+      <span>infinitydragon.ai — AI Infinity Research &amp; Development Institute</span>
+    </footer>
+  </div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  function showHub(){ $('hub').classList.remove('hidden'); $('materials').classList.add('hidden'); $('signout').classList.add('hidden'); $('navTag').classList.remove('hidden'); }
+  function showMaterials(data){
+    $('hub').classList.add('hidden');
+    $('materials').classList.remove('hidden');
+    $('signout').classList.remove('hidden');
+    $('navTag').classList.add('hidden');
+    $('matEyebrow').textContent = data.academy.partner + ' · ' + data.academy.cohort;
+    $('matTitle').textContent = data.academy.name;
+    $('matIntro').textContent = data.academy.intro;
+    $('moduleList').innerHTML = data.modules.map(m => `
+      <li class="module">
+        <div class="moduleHead">
+          <span class="moduleNum">${String(m.n).padStart(2,'0')}</span>
+          <div><h2 class="moduleTitle">${esc(m.title)}</h2><p class="moduleSummary">${esc(m.summary)}</p></div>
+        </div>
+        <ul class="items">
+          ${m.items.map(it => `
+            <li><a class="item" href="${esc(it.href)}">
+              <span class="kind ${esc(it.kind)}">${esc(it.kind)}</span>
+              <span class="itemTitle">${esc(it.title)}</span>
+              <span class="itemArrow">→</span>
+            </a></li>`).join('')}
+        </ul>
+      </li>`).join('');
+  }
+
+  async function loadMaterials(){
+    try {
+      const r = await fetch('/api/materials', { credentials:'same-origin' });
+      if (r.ok) { showMaterials(await r.json()); return true; }
+    } catch {}
+    return false;
+  }
+
+  async function authorize(){
+    const code = $('code').value.trim();
+    if (!code){ $('err').textContent = 'Enter your access code to continue.'; return; }
+    $('authorize').disabled = true; $('err').textContent = '';
+    try {
+      const r = await fetch('/api/authorize', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        credentials:'same-origin', body: JSON.stringify({ code })
+      });
+      const d = await r.json();
+      if (d.ok) { await loadMaterials(); }
+      else { $('err').textContent = d.error || "That access code wasn't recognized."; }
+    } catch { $('err').textContent = 'Something went wrong reaching the server. Try again.'; }
+    finally { $('authorize').disabled = false; }
+  }
+
+  $('enter').addEventListener('click', () => {
+    $('gateWrap').classList.remove('hidden');
+    $('gateWrap').scrollIntoView({ behavior:'smooth', block:'center' });
+    setTimeout(() => $('code').focus(), 250);
+  });
+  $('authorize').addEventListener('click', authorize);
+  $('code').addEventListener('keydown', e => { if (e.key === 'Enter') authorize(); });
+  $('signout').addEventListener('click', async () => {
+    await fetch('/api/authorize', { method:'DELETE', credentials:'same-origin' }).catch(()=>{});
+    showHub();
+  });
+
+  // Returning students with a valid cookie skip the gate.
+  loadMaterials();
+</script>
+</body>
+</html>
