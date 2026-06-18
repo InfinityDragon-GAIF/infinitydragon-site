@@ -8,7 +8,8 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
     2. Live GAIF Audit Demo (9-layer scoring, γ, plateau-lock)
     3. InfinityGPT Architecture (143 elements, 20 sections)
     4. Certification & Pricing
-    5. Token Threat Surface™ explainer
+    5. <a href="#tts" style={navLink}>Threat Surface</a>
+          <a href="/education" style={navLink}>Academy</a>
 */
 
 // ─── DESIGN TOKENS ──────────────────────────────────────────────────────────
